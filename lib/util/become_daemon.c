@@ -75,28 +75,28 @@ _PUBLIC_ void close_low_fds(bool stdin_too, bool stdout_too, bool stderr_too)
 
 _PUBLIC_ void become_daemon(bool do_fork, bool no_process_group, bool log_stdout)
 {
-	if (do_fork) {
-		if (fork()) {
-			_exit(0);
-		}
-	}
-
-	/* detach from the terminal */
-#ifdef HAVE_SETSID
-	if (!no_process_group) setsid();
-#elif defined(TIOCNOTTY)
-	if (!no_process_group) {
-		int i = open("/dev/tty", O_RDWR, 0);
-		if (i != -1) {
-			ioctl(i, (int) TIOCNOTTY, (char *)0);
-			close(i);
-		}
-	}
-#endif /* HAVE_SETSID */
-
-	/* Close fd's 0,1,2 as appropriate. Needed if started by rsh. */
-	/* stdin must be open if we do not fork, for monitoring for
-	 * close.  stdout must be open if we are logging there, and we
-	 * never close stderr (but debug might dup it onto a log file) */
-	close_low_fds(do_fork, !log_stdout, false);
+//   if (do_fork) {
+//     if (fork()) {
+//       _exit(0);
+//     }
+//   }
+//
+//   /* detach from the terminal */
+// #ifdef HAVE_SETSID
+//   if (!no_process_group) setsid();
+// #elif defined(TIOCNOTTY)
+//   if (!no_process_group) {
+//     int i = open("/dev/tty", O_RDWR, 0);
+//     if (i != -1) {
+//       ioctl(i, (int) TIOCNOTTY, (char *)0);
+//       close(i);
+//     }
+//   }
+// #endif /* HAVE_SETSID */
+//
+//   /* Close fd's 0,1,2 as appropriate. Needed if started by rsh. */
+//   /* stdin must be open if we do not fork, for monitoring for
+//    * close.  stdout must be open if we are logging there, and we
+//    * never close stderr (but debug might dup it onto a log file) */
+//   close_low_fds(do_fork, !log_stdout, false);
 }

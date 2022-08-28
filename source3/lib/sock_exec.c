@@ -101,18 +101,18 @@ int sock_exec(const char *prog)
 		DEBUG(0,("socketpair_tcp failed (%s)\n", strerror(errno)));
 		return -1;
 	}
-	if (fork() == 0) {
-		close(fd[0]);
-		close(0);
-		close(1);
-		if (dup(fd[1]) == -1) {
-			exit(1);
-		}
-		if (dup(fd[1]) == -1) {
-			exit(1);
-		}
-		exit(popen(prog, "r"));
-	}
+  // if (fork() == 0) {
+  //   close(fd[0]);
+  //   close(0);
+  //   close(1);
+  //   if (dup(fd[1]) == -1) {
+  //     exit(1);
+  //   }
+  //   if (dup(fd[1]) == -1) {
+  //     exit(1);
+  //   }
+  //   exit(popen(prog, "r"));
+  // }
 	close(fd[1]);
 	return fd[0];
 }
